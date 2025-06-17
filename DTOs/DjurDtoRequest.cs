@@ -6,7 +6,7 @@ namespace DjurAPI.DTOs;
 
 public class DjurDtoRequest
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     [Required]
     [EnumDataType(typeof(SpeciesType), ErrorMessage ="Invalide species")]
     [Display(Name ="Species")]

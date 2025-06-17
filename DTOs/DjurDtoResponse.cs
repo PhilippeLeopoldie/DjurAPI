@@ -6,7 +6,7 @@ namespace DjurAPI.DTOs
 {
     public record DjurDtoResponse
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         [JsonIgnore]
         public SpeciesType SpeciesName { get; init; }
 
