@@ -6,7 +6,7 @@ namespace DjurAPI.Controllers;
 
 [ApiController]
 [Route("api/Djurs")]
-public class DjurController(DAL.TransactionManager transaction): ControllerBase
+public class DjurController(DAL.TransactionManager transaction) : ControllerBase
 {
 
     [HttpGet]
@@ -17,7 +17,7 @@ public class DjurController(DAL.TransactionManager transaction): ControllerBase
         {
             Id = djur.Id,
             isFlying = djur.isFlying,
-            Species = djur.Specie,
+            SpeciesName = djur.SpeciesDisplayName,
             Weight = djur.Weight
         }).ToList();
     }
@@ -25,9 +25,24 @@ public class DjurController(DAL.TransactionManager transaction): ControllerBase
     [HttpGet("{id}")]
     public async Task<Djur> GetDjurByIdAsync(int id)
     {
-        return await transaction.GetDjurByIdAsync(id);   
+        return await transaction.GetDjurByIdAsync(id);
     }
 
+    [HttpPut("{id}")]
+    public async Task PutDjur(int id, [FromBody] DjurDto dto)
+    {
+        try
+        {
+            await transaction.UpdateDjur(id, dto);
+        }
+        catch
+        {
+            throw;
+        }
+        
+    }
+
+    
 
 
    
