@@ -24,14 +24,14 @@ public class TransactionManager
         return await _context.Djur.FindAsync(id);
     }
 
-    public async Task UpdateDjur(int id, DjurDto dto)
+    public async Task UpdateDjur(int id, DjurDtoRequest dto)
     {
         var djur = await GetDjurByIdAsync(id);
         if (djur != null)
         {
             djur.isFlying = dto.isFlying;
             djur.Weight = dto.Weight;
-            djur.Species = ConvertDjurNameToEnum(dto.SpeciesName);
+            djur.Species = dto.SpeciesName;
             await _context.SaveChangesAsync();
         }
         else
@@ -42,13 +42,13 @@ public class TransactionManager
         
     }
 
-    public  async Task CreateDjurAsync(DjurDto djur)
+    public  async Task CreateDjurAsync(DjurDtoRequest djur)
     {
         _context.Add(new Djur
         {
             isFlying = djur.isFlying,
             Weight = djur.Weight,
-            Species = ConvertDjurNameToEnum(djur.SpeciesName)
+            Species = djur.SpeciesName
         });
         await _context.SaveChangesAsync();
     }
@@ -59,7 +59,7 @@ public class TransactionManager
         _context.Remove(djur);
     }
 
-    private  SpeciesType ConvertDjurNameToEnum( string name)
+   /* private  SpeciesType ConvertDjurNameToEnum( string name)
     {
         if (Enum.TryParse<SpeciesType>(name, out var species))
         {
@@ -69,7 +69,7 @@ public class TransactionManager
         {
             throw new ArgumentException($"Invalid species name: {name}");
         }
-    }
+    }*/
 
    
 }

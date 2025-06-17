@@ -10,14 +10,14 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
 {
 
     [HttpGet]
-    public async Task<List<DjurDto>> GetDjursAsync()
+    public async Task<List<DjurDtoRequest>> GetDjursAsync()
     {
         var result = await transaction.GetDjurAsync();
-        return result.Select(djur => new DjurDto
+        return result.Select(djur => new DjurDtoRequest
         {
             Id = djur.Id,
             isFlying = djur.isFlying,
-            SpeciesName = djur.SpeciesDisplayName,
+            SpeciesName = djur.Species,
             Weight = djur.Weight
         }).ToList();
     }
@@ -29,7 +29,7 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task PutDjur(int id, [FromQuery] DjurDto dto)
+    public async Task PutDjur(int id, [FromQuery] DjurDtoRequest dto)
     {
         try
         {
@@ -43,7 +43,7 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
     }
 
     [HttpPost]
-    public async Task CreateDjur([FromQuery] DjurDto djur)
+    public async Task CreateDjur([FromQuery] DjurDtoRequest djur)
     {
         await transaction.CreateDjurAsync(djur);
     }
