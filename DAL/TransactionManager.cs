@@ -1,4 +1,5 @@
-﻿using DjurAPI.Models;
+﻿using DjurAPI.Data;
+using DjurAPI.Models;
 
 namespace DjurAPI.DAL;
 

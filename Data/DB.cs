@@ -1,9 +1,9 @@
 ﻿using Bogus;
 using DjurAPI.Models;
 
-namespace DjurAPI.DAL;
+namespace DjurAPI.Data;
 
-public class DB
+public static class DB
 {
     private static readonly bool[] IsFlyingArray = new[] { true, false };
 
