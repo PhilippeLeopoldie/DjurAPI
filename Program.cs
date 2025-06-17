@@ -1,4 +1,7 @@
 
+using DjurAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace DjurAPI
 {
     public class Program
@@ -6,6 +9,10 @@ namespace DjurAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            // Database connection
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<DjurContext>(
+                options => options.UseSqlServer(connectionString));
 
             // Add services to the container.
 

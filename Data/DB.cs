@@ -8,7 +8,6 @@ public static class DB
     private static readonly bool[] IsFlyingArray = new[] { true, false };
 
     public static List<Djur> djurs = djurGenerator(4);
-    
 
     public static List<Djur> djurGenerator(int nbrOfDjur)
     {
