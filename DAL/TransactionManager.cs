@@ -5,16 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.DAL;
 
-public  class TransactionManager(DjurContext context)
+public   class TransactionManager
 {
+    private  readonly DjurContext _context;
+
+    public TransactionManager(DjurContext context)
+    {
+        _context = context;
+    }
     public async Task<List<Djur>> GetDjurAsync()
     {
-        return await context.Djur.ToListAsync();
+        return await _context.Djur.ToListAsync();
     }
 
     public async Task<Djur?> GetDjurByIdAsync(int id)
     {
-        return await context.Djur.FindAsync(id);
+        return await _context.Djur.FindAsync(id);
     }
 
     public async Task UpdateDjur(int id, DjurDto dto)
@@ -24,16 +30,32 @@ public  class TransactionManager(DjurContext context)
         {
             djur.isFlying = dto.isFlying;
             djur.Weight = dto.Weight;
-            if (Enum.TryParse<SpeciesType>(dto.SpeciesName, out var species))
-            {
-                djur.Species = species;
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid species name: {dto.SpeciesName}");
-            }     
+            djur.Species = ConvertDjurNameToEnum(dto.SpeciesName); 
         }
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         
+    }
+
+    public  async Task CreateDjurAsync(DjurDto djur)
+    {
+        _context.Add(new Djur
+        {
+            isFlying = djur.isFlying,
+            Weight = djur.Weight,
+            Species = ConvertDjurNameToEnum(djur.SpeciesName)
+        });
+        await _context.SaveChangesAsync();
+    }
+
+    private  SpeciesType ConvertDjurNameToEnum( string name)
+    {
+        if (Enum.TryParse<SpeciesType>(name, out var species))
+        {
+            return species;
+        }
+        else
+        {
+            throw new ArgumentException($"Invalid species name: {name}");
+        }
     }
 }

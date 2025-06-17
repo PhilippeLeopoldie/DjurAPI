@@ -29,7 +29,7 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task PutDjur(int id, [FromBody] DjurDto dto)
+    public async Task PutDjur(int id, [FromQuery] DjurDto dto)
     {
         try
         {
@@ -42,7 +42,11 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
         
     }
 
-    
+    [HttpPost]
+    public async Task CreateDjur([FromQuery] DjurDto djur)
+    {
+        await transaction.CreateDjurAsync(djur);
+    }
 
 
    
