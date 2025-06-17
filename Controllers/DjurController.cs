@@ -1,4 +1,5 @@
-﻿using DjurAPI.Models;
+﻿using DjurAPI.DTOs;
+using DjurAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DjurAPI.Controllers;
@@ -9,9 +10,16 @@ public class DjurController: ControllerBase
 {
 
     [HttpGet]
-    public async Task<List<Models.Djur>> GetDjursAsync()
+    public async Task<List<DjurDto>> GetDjursAsync()
     {
-        return await DAL.TransactionManager.GetDjurAsync();
+        var result = await DAL.TransactionManager.GetDjurAsync();
+        return result.Select(djur => new DjurDto
+        {
+            Id = djur.Id,
+            isFlying = djur.isFlying,
+            Species = djur.Specie,
+            Weight = djur.Weight
+        }).ToList();
     }
 
     [HttpGet("{id}")]
