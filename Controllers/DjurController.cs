@@ -10,10 +10,10 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
 {
 
     [HttpGet]
-    public async Task<List<DjurDtoRequest>> GetDjursAsync()
+    public async Task<List<DjurDtoResponse>> GetDjursAsync()
     {
         var result = await transaction.GetDjurAsync();
-        return result.Select(djur => new DjurDtoRequest
+        return result.Select(djur => new DjurDtoResponse
         {
             Id = djur.Id,
             isFlying = djur.isFlying,
