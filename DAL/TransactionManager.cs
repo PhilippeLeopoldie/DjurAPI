@@ -29,9 +29,9 @@ public class TransactionManager
         var djur = await GetDjurByIdAsync(id);
         if (djur != null)
         {
-            djur.isFlying = dto.isFlying;
+            djur.isFlying = dto.IsFlying;
             djur.Weight = dto.Weight;
-            djur.Species = dto.SpeciesName;
+            djur.Species = dto.Species;
             await _context.SaveChangesAsync();
         }
         else
@@ -46,9 +46,9 @@ public class TransactionManager
     {
         _context.Add(new Djur
         {
-            isFlying = djur.isFlying,
+            isFlying = djur.IsFlying,
             Weight = djur.Weight,
-            Species = djur.SpeciesName
+            Species = djur.Species
         });
         await _context.SaveChangesAsync();
     }

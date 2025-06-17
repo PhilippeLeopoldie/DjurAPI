@@ -13,6 +13,6 @@ namespace DjurAPI.DTOs
         public double Weight { get; init; }
         public bool isFlying { get; init; }
         [Display(Name = "Species")]
-        public string SpeciesDisplayName => SpeciesName.ToString();
+        public string Species => SpeciesName.ToString();
     }
 }

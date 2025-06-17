@@ -10,54 +10,64 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
 {
 
     [HttpGet]
-    public async Task<List<DjurDtoResponse>> GetDjursAsync()
+    public async Task<ActionResult<IEnumerable<DjurDtoResponse>>> GetDjursAsync()
     {
         var result = await transaction.GetDjurAsync();
-        return result.Select(djur => new DjurDtoResponse
+        return Ok(result.Select(djur => new DjurDtoResponse
         {
             Id = djur.Id,
             isFlying = djur.isFlying,
             SpeciesName = djur.Species,
             Weight = djur.Weight
-        }).ToList();
+        }).ToList());
     }
 
     [HttpGet("{id}")]
-    public async Task<Djur> GetDjurByIdAsync(int id)
+    public async Task<ActionResult<DjurDtoResponse>> GetDjurByIdAsync(int id)
     {
-        return await transaction.GetDjurByIdAsync(id);
+        var djur = await transaction.GetDjurByIdAsync(id);
+        return Ok(new DjurDtoResponse
+        {
+            Id = djur.Id,
+            isFlying = djur.isFlying,
+            SpeciesName = djur.Species,
+            Weight = djur.Weight
+        });
     }
 
     [HttpPut("{id}")]
-    public async Task PutDjur(int id, [FromQuery] DjurDtoRequest dto)
+    public async Task<IActionResult> PutDjur(int id, [FromQuery] DjurDtoRequest dto)
     {
         try
         {
             await transaction.UpdateDjur(id, dto);
+            return Ok();
         }
         catch(Exception ex)
         {
-            BadRequest(ex);
+           return BadRequest(ex);
         }
         
     }
 
     [HttpPost]
-    public async Task CreateDjur([FromQuery] DjurDtoRequest djur)
+    public async Task<IActionResult> CreateDjur([FromQuery] DjurDtoRequest djur)
     {
         await transaction.CreateDjurAsync(djur);
+       return Ok();
     }
 
     [HttpDelete("{id}")]
-    public async Task DeleteDjur(int id)
+    public async Task<IActionResult> DeleteDjur(int id)
     {
         try
         {
             await transaction.DeleteDjurAsync(id);
+            return Ok();
         }
         catch(Exception ex)
         {
-            BadRequest(ex);
+            return BadRequest(ex);
         }
     }
 
