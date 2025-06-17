@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DjurAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.Data;
 
@@ -10,5 +11,5 @@ public class DjurContext:DbContext
 
     }
 
-    public DbSet<DjurAPI.Models.Djur> Djur { get; set; } = default!;
+    public DbSet<Djur> Djur { get; set; } = default!;
 }

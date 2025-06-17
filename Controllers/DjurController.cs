@@ -6,13 +6,13 @@ namespace DjurAPI.Controllers;
 
 [ApiController]
 [Route("api/Djurs")]
-public class DjurController: ControllerBase
+public class DjurController(DAL.TransactionManager transaction): ControllerBase
 {
 
     [HttpGet]
     public async Task<List<DjurDto>> GetDjursAsync()
     {
-        var result = await DAL.TransactionManager.GetDjurAsync();
+        var result = await transaction.GetDjurAsync();
         return result.Select(djur => new DjurDto
         {
             Id = djur.Id,
@@ -25,7 +25,7 @@ public class DjurController: ControllerBase
     [HttpGet("{id}")]
     public async Task<Djur> GetDjurByIdAsync(int id)
     {
-        return await DAL.TransactionManager.GetDjurByIdAsync(id);   
+        return await transaction.GetDjurByIdAsync(id);   
     }
 
 

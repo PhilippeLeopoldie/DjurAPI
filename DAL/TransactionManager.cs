@@ -1,17 +1,18 @@
 ﻿using DjurAPI.Data;
 using DjurAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.DAL;
 
-public static class TransactionManager
+public  class TransactionManager(DjurContext context)
 {
-    public static async Task<List<Djur>> GetDjurAsync()
+    public async Task<List<Djur>> GetDjurAsync()
     {
-        return DB.djurs;
+        return await context.Djur.ToListAsync();
     }
 
-    public static async Task<Djur?> GetDjurByIdAsync(int id)
+    public async Task<Djur?> GetDjurByIdAsync(int id)
     {
-        return DB.djurs.Where(djur => djur.Id == id).FirstOrDefault();
+        return await context.Djur.FindAsync(id);
     }
 }
