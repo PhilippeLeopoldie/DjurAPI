@@ -35,9 +35,9 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
         {
             await transaction.UpdateDjur(id, dto);
         }
-        catch
+        catch(Exception ex)
         {
-            throw;
+            BadRequest(ex);
         }
         
     }
@@ -46,6 +46,19 @@ public class DjurController(DAL.TransactionManager transaction) : ControllerBase
     public async Task CreateDjur([FromQuery] DjurDto djur)
     {
         await transaction.CreateDjurAsync(djur);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task DeleteDjur(int id)
+    {
+        try
+        {
+            await transaction.DeleteDjurAsync(id);
+        }
+        catch(Exception ex)
+        {
+            BadRequest(ex);
+        }
     }
 
 

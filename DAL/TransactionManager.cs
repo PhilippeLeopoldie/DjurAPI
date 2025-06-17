@@ -30,9 +30,14 @@ public   class TransactionManager
         {
             djur.isFlying = dto.isFlying;
             djur.Weight = dto.Weight;
-            djur.Species = ConvertDjurNameToEnum(dto.SpeciesName); 
+            djur.Species = ConvertDjurNameToEnum(dto.SpeciesName);
+            await _context.SaveChangesAsync();
         }
-        await _context.SaveChangesAsync();
+        else
+        {
+            throw new Exception($"Djur with Id:{id} not found!");
+        }
+        
         
     }
 
@@ -57,5 +62,11 @@ public   class TransactionManager
         {
             throw new ArgumentException($"Invalid species name: {name}");
         }
+    }
+
+    public async Task DeleteDjurAsync(int id)
+    {
+        var djur = GetDjurByIdAsync(id);
+         _context.Remove(djur);
     }
 }
