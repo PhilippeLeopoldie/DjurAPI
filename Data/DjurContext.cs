@@ -1,4 +1,4 @@
-﻿using DjurAPI.Models;
+﻿using DjurAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.Data;

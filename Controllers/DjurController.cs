@@ -1,5 +1,5 @@
 ﻿using DjurAPI.DTOs;
-using DjurAPI.Models;
+using DjurAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DjurAPI.Controllers;

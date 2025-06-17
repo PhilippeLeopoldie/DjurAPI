@@ -1,13 +1,14 @@
 ﻿using DjurAPI.Data;
 using DjurAPI.DTOs;
-using DjurAPI.Models;
+using DjurAPI.Entities;
+using DjurAPI.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.DAL;
 
-public   class TransactionManager
+public class TransactionManager
 {
-    private  readonly DjurContext _context;
+    private readonly DjurContext _context;
 
     public TransactionManager(DjurContext context)
     {
@@ -52,6 +53,12 @@ public   class TransactionManager
         await _context.SaveChangesAsync();
     }
 
+    public async Task DeleteDjurAsync(int id)
+    {
+        var djur = GetDjurByIdAsync(id);
+        _context.Remove(djur);
+    }
+
     private  SpeciesType ConvertDjurNameToEnum( string name)
     {
         if (Enum.TryParse<SpeciesType>(name, out var species))
@@ -64,9 +71,5 @@ public   class TransactionManager
         }
     }
 
-    public async Task DeleteDjurAsync(int id)
-    {
-        var djur = GetDjurByIdAsync(id);
-         _context.Remove(djur);
-    }
+   
 }

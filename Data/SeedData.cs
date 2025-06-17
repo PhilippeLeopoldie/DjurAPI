@@ -1,5 +1,6 @@
 ﻿using Bogus;
-using DjurAPI.Models;
+using DjurAPI.Entities;
+using DjurAPI.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DjurAPI.Data;

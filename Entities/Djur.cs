@@ -1,6 +1,7 @@
 ﻿using DjurAPI.DAL;
+using DjurAPI.Entities.Enums;
 
-namespace DjurAPI.Models;
+namespace DjurAPI.Entities;
 
 public class Djur
 {
